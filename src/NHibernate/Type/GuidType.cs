@@ -47,8 +47,19 @@ namespace NHibernate.Type
 		public override void Set(DbCommand cmd, object value, int index, ISessionImplementor session)
 		{
 			var dp = cmd.Parameters[index];
-
-			dp.Value = dp.DbType == DbType.Binary ? ((Guid)value).ToByteArray() : value;
+			//Modified by KIT
+			var fullName = cmd.GetType().FullName;
+			if (fullName != null && (fullName.Equals("Oracle.DataAccess.Client.OracleCommand") ||
+			                         fullName.Equals("Oracle.ManagedDataAccess.Client.OracleCommand")))
+			{
+				// In case of Oracle data provider convert the Guid to a properly formatted string instead
+				// of letting Oracle.DataAccess build an inappropriate format
+				dp.Value = ((Guid)value).ToString("B"); // Enclose Guid in brackets like {34781E93-33B6-4b6b-8860-F52972DE77F0}
+			}
+			else
+			{
+				dp.Value = dp.DbType == DbType.Binary ? ((Guid)value).ToByteArray() : value;
+			}
 		}
 
 		/// <summary></summary>

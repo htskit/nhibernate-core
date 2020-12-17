@@ -2,7 +2,8 @@
   <Import Project="../../build-common/NHibernate.props" />
 
   <PropertyGroup>
-    <Description>An object persistence library for relational databases.</Description>
+    <Description>An object persistence library for relational databases.
+Adapted by KIT for Oracle Data Access.</Description>
     <TargetFrameworks>$(NhLibTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3001;3002;3003;3005;1591;419</NoWarn>
     <SignAssembly>True</SignAssembly>
@@ -13,6 +14,10 @@
     <PackageDescription>NHibernate is a mature, open source object-relational mapper for the .NET framework. It is actively developed, fully featured and used in thousands of successful projects.</PackageDescription>
     <PackageTags>ORM; O/RM; DataBase; DAL; ObjectRelationalMapping; NHibernate; ADO.Net; Core</PackageTags>
     <LangVersion>7.2</LangVersion>
+    <PackageVersion>5.3.7</PackageVersion>
+    <Title>KIT adapted NHibernate</Title>
+    <PackageProjectUrl>https://github.com/htskit/nhibernate-core</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   
   <ItemGroup>
