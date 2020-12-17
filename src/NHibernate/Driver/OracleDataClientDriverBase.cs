@@ -118,7 +118,9 @@ namespace NHibernate.Driver
 					base.InitializeParameter(dbParam, name, SqlTypeFactory.Int16);
 					break;
 				case DbType.Guid:
-					base.InitializeParameter(dbParam, name, _guidSqlType);
+					//Modified by KIT
+					//base.InitializeParameter(dbParam, name, _guidSqlType);
+					base.InitializeParameter(dbParam, name, SqlTypeFactory.GetAnsiString(38));
 					break;
 				case DbType.Xml:
 					InitializeParameter(dbParam, name, _oracleDbTypeXmlType);

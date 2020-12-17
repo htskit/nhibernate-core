@@ -236,7 +236,12 @@ namespace NHibernate.Driver
 		/// <returns></returns>
 		public override bool IsDBNull(int i)
 		{
-			return GetValue(i).Equals(DBNull.Value);
+			//Modified by KIT
+			object obj = GetValue(i);
+			if (obj == null)
+				return true;
+			return obj.Equals(DBNull.Value);
+			//return GetValue(i).Equals(DBNull.Value);
 		}
 
 		/// <summary>

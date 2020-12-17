@@ -154,7 +154,9 @@ namespace NHibernate.Dialect
 
 		protected virtual void RegisterGuidTypeMapping()
 		{
-			RegisterColumnType(DbType.Guid, "RAW(16)");
+			//Modified by KIT
+			//RegisterColumnType(DbType.Guid, "RAW(16)");
+			RegisterColumnType(DbType.Guid, "CHAR(38)");
 		}
 
 		protected virtual void RegisterCharacterTypeMappings()
@@ -170,6 +172,10 @@ namespace NHibernate.Dialect
 			RegisterColumnType(DbType.StringFixedLength, 2000, prefix + "CHAR($l)");
 			RegisterColumnType(DbType.String, prefix + "VARCHAR2(255)");
 			RegisterColumnType(DbType.String, 4000, prefix + "VARCHAR2($l)");
+			//Modified by KIT
+			//RegisterColumnType(DbType.String, 4000, prefix + "VARCHAR2($l)");
+			RegisterColumnType(DbType.String, 2000, prefix + "VARCHAR2($l)");
+
 			RegisterColumnType(DbType.String, 1073741823, prefix + "CLOB");
 		}
 
@@ -360,16 +366,17 @@ namespace NHibernate.Dialect
 			}
 
 			string selectColumns = ExtractColumnOrAliasNames(sql);
-
+			
+			//Modified by KIT - Ensure correct paging
 			var pagingSelect = new SqlStringBuilder(sql.Count + 10);
-			if (offset != null)
-			{
-				pagingSelect.Add("select " + selectColumns + " from ( select row_.*, rownum rownum_ from ( ");
-			}
-			else
-			{
-				pagingSelect.Add("select " + selectColumns + " from ( ");
-			}
+			//if (offset != null)
+			//{
+			pagingSelect.Add("select " + selectColumns + " from ( select row_.*, rownum rownum_ from ( ");
+			//}
+			//else
+			//{
+			//   pagingSelect.Add("select " + selectColumns + " from ( ");
+			//}
 			pagingSelect.Add(sql);
 			if (offset != null && limit != null)
 			{
